@@ -1,0 +1,14 @@
+{
+  "name": "Eureka Atlas Research & Patent Intelligence",
+  "short_name": "Eureka Atlas",
+  "description": "Find, verify, analyze, and preserve the newest high-impact research papers and patents.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f9",
+  "theme_color": "#07111f",
+  "icons": [
+    {"src":"assets/icons/icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"assets/icons/icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
+}
