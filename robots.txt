@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bilalresearch8.github.io/eureka-atlas/sitemap.xml
