@@ -2,6 +2,15 @@
 
 **Research and patent intelligence for scientists, engineers, builders, founders, investors, and R&D leaders.**
 
+## Launch Eureka Atlas
+
+**Use the live software here:**  
+### [Open Eureka Atlas →](https://bilalresearch8.github.io/eureka-atlas/)
+
+No installation is required. Open the link in a modern browser, apply the recommended setup, choose your topics, journals, patents, and date range, then run the search.
+
+**Current public release:** v15
+
 Eureka Atlas searches exact elite journals and patent sources, verifies publication dates, ranks unseen records, extracts quantitative evidence, identifies scale-up risks, and stores every delivered result in a local no-repeat research database.
 
 ![Eureka Atlas interface](assets/eureka-atlas-preview.png)
@@ -21,10 +30,10 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 
 ## Quick start
 
-1. Open `index.html`, or publish the repository with GitHub Pages.
+1. For normal use, open the [live Eureka Atlas website](https://bilalresearch8.github.io/eureka-atlas/). Developers can also run `index.html` locally.
 2. Press **Apply recommended setup**.
 3. Review the selected topics, keywords, journals, patents, and date range.
-4. Press **Run frontier search**.
+4. Press **Find newest research now**.
 5. Add optional API keys only for deeper indexes, patent rescue, and full-paper analysis.
 
 ## GitHub Pages deployment
