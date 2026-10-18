@@ -18,7 +18,8 @@ function benchmarkStatusClass(v){const s=String(v||'unknown').toLowerCase();if(/
 function benchmarkEscape(v){return typeof escapeHtml==='function'?escapeHtml(v):String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function benchmarkNumber(v,fallback='—'){const n=Number(v);return Number.isFinite(n)?String(Math.round(n)):fallback;}
 function benchmarkSelectedStudy(){
-  const picked=(typeof selectedCurrentRows==='function'?selectedCurrentRows():[]).filter(x=>x.recordType!=='patent');
+  if(typeof selectedResultKeys==='undefined'||!selectedResultKeys.size)return null;
+  const picked=(typeof currentResults!=='undefined'?currentResults:[]).filter(x=>x.recordType!=='patent'&&selectedResultKeys.has(paperKey(x)));
   return picked[0]||null;
 }
 function benchmarkUseSelected(){
