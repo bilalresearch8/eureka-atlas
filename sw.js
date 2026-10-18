@@ -1,5 +1,5 @@
-const CACHE = 'eureka-atlas-v17-20261018-shell';
-const SHELL = ['./','./index.html','./manifest.webmanifest','./assets/icons/eureka-atlas.svg','./assets/icons/icon-192.png','./assets/icons/icon-512.png'];
+const CACHE = 'eureka-atlas-v18-benchmark-shell';
+const SHELL = ['./','./index.html','./benchmark-lab.css','./benchmark-lab.js','./manifest.webmanifest','./assets/icons/eureka-atlas.svg','./assets/icons/icon-192.png','./assets/icons/icon-512.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting()));});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 self.addEventListener('fetch',event=>{
