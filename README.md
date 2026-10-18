@@ -9,7 +9,7 @@
 
 No installation is required. Open the link in a modern browser, apply the recommended setup, choose your topics, journals, patents, and date range, then run the search.
 
-**Current public release:** v15
+**Current public release:** v18
 
 Eureka Atlas searches exact elite journals and patent sources, verifies publication dates, ranks unseen records, extracts quantitative evidence, identifies scale-up risks, and stores every delivered result in a local no-repeat research database.
 
@@ -21,7 +21,8 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 - Supports editable research themes and keywords.
 - Searches US and worldwide patents with date-controlled links and optional Gemini rescue.
 - Enforces strict journal identity so similarly named journals are not substituted.
-- Extracts field-specific quantitative metrics and commercialization implications.
+- Extracts field-specific quantitative metrics and commercialization implications, including up to 12 source-grounded measurements during deep analysis.
+- Includes an **Electrochemical Benchmark Lab** to compare a paper/PDF against Crossref-verified state-of-the-art studies and industrial requirements while preserving test-condition comparability.
 - Generates scale-up challenges, recommended validation experiments, and best-fit beneficiaries.
 - Stores delivered papers and patents in IndexedDB so future searches skip duplicates.
 - Exports readable multi-page PDF reports and CSV datasets.
@@ -38,12 +39,12 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 
 ## GitHub Pages deployment
 
-This repository includes `.github/workflows/pages.yml`. After the files are pushed:
+This repository includes `.github/workflows/static.yml`. After the files are pushed:
 
 1. Open the repository on GitHub.
 2. Go to **Settings → Pages**.
 3. Under **Build and deployment**, select **GitHub Actions** as the source.
-4. Open the **Actions** tab and wait for **Deploy Eureka Atlas to GitHub Pages** to finish.
+4. Open the **Actions** tab and wait for **Deploy static content to Pages** to finish.
 5. The published URL appears in the deployment summary and in **Settings → Pages**.
 
 See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for browser, command-line, and GitHub Desktop instructions.
@@ -64,12 +65,14 @@ Read [SECURITY.md](SECURITY.md) and [PRIVACY.md](PRIVACY.md) before public deplo
 ```text
 .
 ├── index.html                     Main application
+├── benchmark-lab.js               Electrochemical SOTA / industrial comparison engine
+├── benchmark-lab.css              Benchmark Lab interface styles
 ├── manifest.webmanifest           Installable web-app metadata
 ├── sw.js                          Offline application-shell cache
 ├── assets/
 │   ├── icons/                     App and browser icons
 │   └── eureka-atlas-preview.png   README preview
-├── .github/workflows/pages.yml    GitHub Pages deployment
+├── .github/workflows/static.yml   GitHub Pages deployment
 ├── docs/DEPLOYMENT.md             Publishing instructions
 ├── SECURITY.md                    Key and vulnerability guidance
 ├── PRIVACY.md                     Browser-data and external-service disclosure
