@@ -8,7 +8,7 @@ const scripts=[...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].filt
 assert.equal(scripts.length,1,'one inline application script');
 const js=scripts[0][2];
 new vm.Script(js,{filename:'index.html:inline-app'});
-assert.match(js,/const APP_VERSION='17'/);
+assert.match(js,/const APP_VERSION='19'/);
 assert.equal((js.match(/daysAgo\(7\)/g)||[]).length,2,'weekly startup and recommended setup');
 assert.doesNotMatch(js,/['"]gemini-3\.7-flash['"]/);
 assert.doesNotMatch(js,/['"]gemini-3\.5-flash['"]/);
@@ -67,6 +67,6 @@ const f=context.testHooks;
   ok(await f.verifyGeminiPaper(c,'2026-10-11','2026-10-18')===null,'network failure closed');
   const sw=fs.readFileSync(path.join(__dirname,'..','sw.js'),'utf8');
   new vm.Script(sw,{filename:'sw.js'});
-  ok(sw.includes('eureka-atlas-v17-20261018-shell'),'service worker cache bumped');
+  ok(sw.includes('eureka-atlas-v19-20261025-shell'),'service worker cache bumped');
   console.log('PASS: '+checks+' verification assertions, app syntax, service worker syntax and model defaults.');
 })().catch(e=>{console.error(e);process.exitCode=1;});
