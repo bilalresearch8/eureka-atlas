@@ -9,7 +9,7 @@
 
 No installation is required. Open the link in a modern browser, apply the recommended setup, choose your topics, journals, patents, and date range, then run the search.
 
-**Current public release:** v18
+**Current public release:** v19
 
 Eureka Atlas searches exact elite journals and patent sources, verifies publication dates, ranks unseen records, extracts quantitative evidence, identifies scale-up risks, and stores every delivered result in a local no-repeat research database.
 
@@ -22,7 +22,9 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 - Searches US and worldwide patents with date-controlled links and optional Gemini rescue.
 - Enforces strict journal identity so similarly named journals are not substituted.
 - Extracts field-specific quantitative metrics and commercialization implications, including up to 12 source-grounded measurements during deep analysis.
-- Includes an **Electrochemical Benchmark Lab** to compare a paper/PDF against Crossref-verified state-of-the-art studies and industrial requirements while preserving test-condition comparability.
+- Includes an **Electrochemical Benchmark Lab** for condition-aware study comparisons and industry-readiness analysis.
+- **No AI key required for the literature snapshot:** fetch DOI-verified Crossref bibliographic neighbors with clear evidence labels. If Gemini reaches HTTP 429 quota, the app gracefully falls back to metadata and preserves previously extracted target metrics where available.
+- Crossref identity verification does not validate numerical measurements. Unsupported numerical state-of-the-art claims are suppressed and readiness scores stay unscored in metadata-only mode.
 - Generates scale-up challenges, recommended validation experiments, and best-fit beneficiaries.
 - Stores delivered papers and patents in IndexedDB so future searches skip duplicates.
 - Exports readable multi-page PDF reports and CSV datasets.
@@ -35,7 +37,7 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 2. Press **Apply recommended setup**.
 3. Review the selected topics, keywords, journals, patents, and date range.
 4. Press **Find newest research now**.
-5. Add optional API keys only for deeper indexes, patent rescue, and full-paper analysis.
+5. Open **Benchmark Lab** to compare studies. With no Gemini key, results are Crossref bibliographic leads, not numeric performance benchmarks. Gemini adds deeper evidence extraction when enabled and within quota.
 
 ## GitHub Pages deployment
 
@@ -66,13 +68,15 @@ Read [SECURITY.md](SECURITY.md) and [PRIVACY.md](PRIVACY.md) before public deplo
 .
 ├── index.html                     Main application
 ├── benchmark-lab.js               Electrochemical SOTA / industrial comparison engine
+├── benchmark-fallback.js          Crossref metadata fallback and evidence safety checks
 ├── benchmark-lab.css              Benchmark Lab interface styles
 ├── manifest.webmanifest           Installable web-app metadata
 ├── sw.js                          Offline application-shell cache
 ├── assets/
 │   ├── icons/                     App and browser icons
 │   └── eureka-atlas-preview.png   README preview
-├── .github/workflows/static.yml   GitHub Pages deployment
+├── .github/workflows/static.yml   GitHub Pages deployment with tests
+├── .github/workflows/verify.yml   PR regression test gate
 ├── docs/DEPLOYMENT.md             Publishing instructions
 ├── SECURITY.md                    Key and vulnerability guidance
 ├── PRIVACY.md                     Browser-data and external-service disclosure
