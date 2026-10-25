@@ -31,6 +31,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Verify application before deployment
+        run: |
+          node --check benchmark-fallback.js
+          node --check benchmark-lab.js
+          node tests/release_verification.test.cjs
+          node tests/benchmark_lab.test.cjs
+          node tests/benchmark_fallback.test.cjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

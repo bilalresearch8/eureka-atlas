@@ -16,7 +16,7 @@ new vm.Script(scripts[0][2],{filename:'index.html:inline'});
 new vm.Script(benchmark,{filename:'benchmark-lab.js'});
 new vm.Script(sw,{filename:'sw.js'});
 
-assert.match(html,/const APP_VERSION='18'/);
+assert.match(html,/const APP_VERSION='19'/);
 assert.match(html,/id="benchmark-lab"/);
 assert.match(html,/id="benchmarkStudy"/);
 assert.match(html,/id="runBenchmark"/);
@@ -35,14 +35,16 @@ assert.match(benchmark,/half-cell vs full cell/i);
 assert.match(benchmark,/Crossref/i);
 assert.match(benchmark,/titleMatchesAuthority/);
 assert.match(benchmark,/identity_verified:true/);
+assert.match(html,/benchmark-fallback\.js/);
+assert.match(sw,/benchmark-fallback\.js/);
 assert.match(benchmark,/industrial_gap/);
 assert.match(benchmark,/metric_comparison/);
 assert.match(benchmark,/next_experiments/);
 assert.match(benchmark,/Never estimate missing values/i);
 assert.match(css,/\.benchmark-table/);
 assert.match(css,/\.benchmark-gap-grid/);
-assert.match(sw,/eureka-atlas-v18-benchmark-shell/);
+assert.match(sw,/eureka-atlas-v19-20261025-shell/);
 assert.match(sw,/benchmark-lab\.js/);
 assert.match(sw,/benchmark-lab\.css/);
 
-console.log('PASS: Eureka Atlas v18 Benchmark Lab, quantitative-evidence, syntax, and shell regression checks.');
+console.log('PASS: Eureka Atlas v19 Benchmark Lab, quantitative-evidence, syntax, and shell regression checks.');
