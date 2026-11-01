@@ -46,14 +46,22 @@ async function atlasCrossrefDOI(doi){
   if(result)atlasMetadataCache.set(key,result);
   return result;
 }
-async function atlasSearchCrossrefPeers(title,count,targetDoi){
+function atlasCrossrefPublicationWindow(months,asOf=new Date()){
+  const safe=Math.max(1,Math.min(120,Math.floor(Number(months)||36)));
+  const to=new Date(Date.UTC(asOf.getUTCFullYear(),asOf.getUTCMonth(),asOf.getUTCDate()));
+  const from=new Date(to);
+  from.setUTCMonth(from.getUTCMonth()-safe);
+  return {from:from.toISOString().slice(0,10),to:to.toISOString().slice(0,10),months:safe};
+}
+async function atlasSearchCrossrefPeers(title,count,targetDoi,months=36){
   if(atlasTitleTerms(title).size<2)return [];
   const q=new URL('https://api.crossref.org/works');
   q.searchParams.set('query.title',title.slice(0,160));
-  q.searchParams.set('filter','type:journal-article');
+  const window=atlasCrossrefPublicationWindow(months);
+  q.searchParams.set('filter','type:journal-article,from-pub-date:'+window.from+',until-pub-date:'+window.to);
   q.searchParams.set('rows',String(Math.min(60,Math.max(25,count*6))));
   q.searchParams.set('mailto',CONTACT_EMAIL);
-  const key='query:'+title.toLowerCase()+':'+count;
+  const key='query:'+title.toLowerCase()+':'+count+':'+window.from+':'+window.to;
   let records=atlasMetadataCache.get(key);
   if(!records){
     const data=await fetchRetry(q.toString(),null,21000,1);
@@ -61,7 +69,7 @@ async function atlasSearchCrossrefPeers(title,count,targetDoi){
     atlasMetadataCache.set(key,records);
   }
   return records
-    .filter(r=>r.doi!==targetDoi&&!/(?:^review\b|\breview of\b|\bperspective\b|\beditorial\b)/i.test(r.title))
+    .filter(r=>r.doi!==targetDoi&&r.publication_date>=window.from&&r.publication_date<=window.to&&!/(?:^review\b|\breview of\b|\bperspective\b|\beditorial\b)/i.test(r.title))
     .map(r=>({...r,similarity:atlasRelatedness(title,r.title)}))
     .filter(r=>r.similarity>=0.32)
     .sort((a,b)=>b.similarity-a.similarity||String(b.publication_date).localeCompare(String(a.publication_date)))
@@ -101,12 +109,13 @@ function atlasEvidenceGuard(raw,comparators){
   result.source_urls=Array.from(new Set([...(raw.source_urls||[]),...comparators.map(c=>c.source_url)].map(atlasSafeUrl).filter(Boolean)));
   return result;
 }
-async function atlasMetadataBenchmark(study,schema,count,targetProfile=null,reason=''){
+async function atlasMetadataBenchmark(study,schema,count,targetProfile=null,reason='',months=36){
   const seed=String(study||'').trim();
   const suppliedDoi=atlasExtractDOI(seed)||atlasExtractDOI(targetProfile?.doi||'');
   const target={...(targetProfile||{})};
   let title=String(target.title||'').trim()||atlasFirstTitle(seed);
-  const warnings=[];
+  const window=atlasCrossrefPublicationWindow(months);
+  const warnings=['Comparator publication window: '+window.from+' through '+window.to+'; exact-date, online-first records only.'];
   if(suppliedDoi){
     try{
       const official=await atlasCrossrefDOI(suppliedDoi);
@@ -121,11 +130,11 @@ async function atlasMetadataBenchmark(study,schema,count,targetProfile=null,reas
   target.title=title||'Unidentified study';
   let comparators=[];
   if(title&&atlasTitleTerms(title).size>=2){
-    try{comparators=await atlasSearchCrossrefPeers(title,count,target.doi||'');}
+    try{comparators=await atlasSearchCrossrefPeers(title,count,target.doi||'',months);}
     catch(e){warnings.push('Crossref comparator search unavailable: '+String(e.message).slice(0,120));}
   }else warnings.push('Add a DOI or a distinctive paper title to search related literature.');
   const reasonText=reason?'AI analysis was unavailable: '+reason+'. ':'';
-  const notice=reasonText+'Bibliographic identities are Crossref-sourced. No competing performance measurements, ranking or industrial numeric targets were independently established.';
+  const notice=reasonText+'Bibliographic identities are Crossref-sourced within the selected '+window.months+'-month publication window. No competing performance measurements, ranking or industrial numeric targets were independently established.';
   const metrics=schema.metrics.slice(0,12).map(metric=>({
     metric,target_value:atlasKnownTargetMetric(target,metric),
     sota_best:'Not verified',sota_source_doi:'',sota_conditions:'',
