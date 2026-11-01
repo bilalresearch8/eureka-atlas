@@ -15,9 +15,11 @@ jobs:
         run: |
           node --check benchmark-fallback.js
           node --check benchmark-lab.js
+          node --check benchmark-targets.js
           node --check sw.js
       - name: Run regression suite
         run: |
           node tests/release_verification.test.cjs
           node tests/benchmark_lab.test.cjs
           node tests/benchmark_fallback.test.cjs
+          node tests/industrial_reference.test.cjs
