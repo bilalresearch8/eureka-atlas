@@ -9,7 +9,7 @@
 
 No installation is required. Open the link in a modern browser, apply the recommended setup, choose your topics, journals, patents, and date range, then run the search.
 
-**Current public release:** v19
+**Current public release:** v20
 
 Eureka Atlas searches exact elite journals and patent sources, verifies publication dates, ranks unseen records, extracts quantitative evidence, identifies scale-up risks, and stores every delivered result in a local no-repeat research database.
 
@@ -25,6 +25,9 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 - Includes an **Electrochemical Benchmark Lab** for condition-aware study comparisons and industry-readiness analysis.
 - **No AI key required for the literature snapshot:** fetch DOI-verified Crossref bibliographic neighbors with clear evidence labels. If Gemini reaches HTTP 429 quota, the app gracefully falls back to metadata and preserves previously extracted target metrics where available.
 - Crossref identity verification does not validate numerical measurements. Unsupported numerical state-of-the-art claims are suppressed and readiness scores stay unscored in metadata-only mode.
+- **Industrial reference explorer:** a no-key, interactive numerical chart against cited 2026 U.S. DOE low-temperature PEM, liquid alkaline, or high-temperature electrolysis targets. It requires explicit user confirmation of matching engineering conditions and a figure/table citation before reporting even a provisional threshold comparison. It is not a certification.
+- Metadata-only peer searches now apply the selected 12/36/60/120-month publication horizon with strict online-first dates.
+- Gemini API requests explicitly use `store=false` to opt out of optional provider logging under its October 26, 2026 policy. Data still goes to Google for processing and is subject to provider terms.
 - Generates scale-up challenges, recommended validation experiments, and best-fit beneficiaries.
 - Stores delivered papers and patents in IndexedDB so future searches skip duplicates.
 - Exports readable multi-page PDF reports and CSV datasets.
@@ -38,6 +41,7 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 3. Review the selected topics, keywords, journals, patents, and date range.
 4. Press **Find newest research now**.
 5. Open **Benchmark Lab** to compare studies. With no Gemini key, results are Crossref bibliographic leads, not numeric performance benchmarks. Gemini adds deeper evidence extraction when enabled and within quota.
+6. Open the **Industrial reference explorer** for a standalone, source-linked, no-key comparison against U.S. DOE water-electrolysis guideposts. Carefully confirm equivalent conditions before treating any numerical comparison as provisional.
 
 ## GitHub Pages deployment
 
@@ -57,7 +61,8 @@ See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for browser, command-line, and GitH
 - User-entered keys are stored only in that user's browser when **Save research settings** is selected.
 - Never paste a real API key into `index.html`, README files, Git commits, issues, or screenshots.
 - Search history and the research database are stored locally in the browser using IndexedDB or localStorage.
-- Attached PDFs are held in browser memory and sent to Gemini only when a question is submitted.
+- Attached PDFs are held in browser memory and sent to Gemini only when the user requests an analysis.
+- Gemini calls explicitly request `store=false`, reducing optional provider logging; this does **not** mean Google cannot process or retain content under other applicable policies.
 - The site does not bypass publisher paywalls.
 
 Read [SECURITY.md](SECURITY.md) and [PRIVACY.md](PRIVACY.md) before public deployment.
@@ -69,6 +74,8 @@ Read [SECURITY.md](SECURITY.md) and [PRIVACY.md](PRIVACY.md) before public deplo
 ├── index.html                     Main application
 ├── benchmark-lab.js               Electrochemical SOTA / industrial comparison engine
 ├── benchmark-fallback.js          Crossref metadata fallback and evidence safety checks
+├── benchmark-targets.js           DOE guidepost data and source-aware evidence comparison
+├── benchmark-targets.css          Industrial visual comparison styles
 ├── benchmark-lab.css              Benchmark Lab interface styles
 ├── manifest.webmanifest           Installable web-app metadata
 ├── sw.js                          Offline application-shell cache
