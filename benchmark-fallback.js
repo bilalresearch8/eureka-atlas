@@ -49,8 +49,10 @@ async function atlasCrossrefDOI(doi){
 function atlasCrossrefPublicationWindow(months,asOf=new Date()){
   const safe=Math.max(1,Math.min(120,Math.floor(Number(months)||36)));
   const to=new Date(Date.UTC(asOf.getUTCFullYear(),asOf.getUTCMonth(),asOf.getUTCDate()));
-  const from=new Date(to);
-  from.setUTCMonth(from.getUTCMonth()-safe);
+  // Clamp month-end dates (e.g. March 31 minus one month => February 28, not March 3).
+  const from=new Date(Date.UTC(to.getUTCFullYear(),to.getUTCMonth()-safe,1));
+  const lastOfMonth=new Date(Date.UTC(from.getUTCFullYear(),from.getUTCMonth()+1,0)).getUTCDate();
+  from.setUTCDate(Math.min(to.getUTCDate(),lastOfMonth));
   return {from:from.toISOString().slice(0,10),to:to.toISOString().slice(0,10),months:safe};
 }
 async function atlasSearchCrossrefPeers(title,count,targetDoi,months=36){
