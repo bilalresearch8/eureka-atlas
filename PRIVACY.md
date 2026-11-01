@@ -18,7 +18,15 @@ This data is stored in IndexedDB or localStorage within the browser profile and 
 
 Searches and analysis may send queries, DOI metadata, URLs, abstracts, patent terms, and user questions to services selected by the user, including Crossref, OpenAlex, Semantic Scholar, Gemini, Google Patents, USPTO, WIPO PATENTSCOPE, Espacenet, and Unpaywall.
 
-An attached paper PDF is sent to Gemini only when the user submits a question in full-paper mode. The PDF is held in browser memory and is not stored in the Eureka Atlas research database.
+An attached paper PDF is transmitted to Gemini only when the user initiates an analysis or submits a question in full-paper mode. The PDF is held in browser memory and is not stored in the Eureka Atlas research database.
+
+## Gemini request logging and third-party handling (October 2026)
+
+Google changed the Gemini GenerateContent API default on **October 26, 2026**: newly created paid-tier API projects may store request logs unless the caller opts out. Eureka Atlas now sends `store=false` on each Gemini Interactions and GenerateContent request, including PDF analysis. This asks Google not to retain those requests in the optional Gemini Logs and Datasets feature. It does **not** prevent Google from receiving and processing the content and does not override its separate terms, safety systems, abuse monitoring, or other retention policies. Stateless Interactions requests do not use server-stored previous interaction histories.
+
+Users should not upload unpublished, confidential, proprietary, patent-sensitive, or third-party-restricted manuscripts without authorization. Metadata-only Crossref comparison and the official DOE industrial reference explorer work without sending PDFs to Gemini.
+
+Google source: https://ai.google.dev/gemini-api/docs/logs-datasets (updated October 26, 2026).
 
 ## Public contact information
 
