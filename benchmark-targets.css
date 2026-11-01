@@ -1,0 +1,30 @@
+/* DOE source-backed industrial reference explorer, v20 */
+.industrial-explorer{margin-top:24px;border:1px solid var(--line);border-radius:18px;padding:22px;background:#fff}
+.industrial-explorer h3{font:800 23px/1.25 Manrope,Inter,Arial,sans-serif;margin:5px 0}
+.industrial-explorer p{color:var(--muted);font-size:12px;margin:7px 0 14px}
+.industrial-explorer .industrial-eyebrow{text-transform:uppercase;font-size:10px;font-weight:900;color:var(--blue);letter-spacing:.09em}
+.industrial-ref-form{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}
+.industrial-ref-form label{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-bottom:5px}
+.industrial-ref-form input,.industrial-ref-form select{display:block;width:100%;border:1px solid var(--line);border-radius:9px;background:#fff;padding:10px;min-height:44px;font-size:14px}
+.industrial-ref-form .wide{grid-column:1/-1}
+.industrial-ref-attestation{display:flex;gap:9px;align-items:flex-start;background:#f6f8fa;border-radius:10px;padding:11px;font-size:12px}
+.industrial-ref-attestation input{width:17px;height:17px;min-height:0;flex:none;margin:2px 0 0}
+.industrial-ref-attestation label{font-weight:500;color:var(--ink);font-size:12px;line-height:1.4;margin:0}
+.industrial-ref-main{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.industrial-ref-chart{border:1px solid var(--line);border-radius:13px;padding:15px;background:var(--surface2)}
+.industrial-ref-chart h4{font-size:14px;margin:0 0 14px}
+.industrial-ref-line{margin-bottom:16px}.industrial-ref-line-label{display:flex;justify-content:space-between;gap:8px;margin-bottom:6px;font-size:11px}.industrial-ref-line-label strong{font-variant-numeric:tabular-nums}
+.industrial-ref-track{height:18px;border-radius:9px;background:#e2e6ed;overflow:hidden}
+.industrial-ref-fill{height:100%;min-width:0;border-radius:9px;background:#536174}
+.industrial-ref-fill.measured{background:var(--blue)}
+.industrial-ref-fill.reference{background:#56667b}
+.industrial-ref-status{padding:12px;border:1px solid var(--line);border-radius:10px;font-size:12px;background:#f7f8fb}
+.industrial-ref-status.ahead{border-color:#a7d9bf;background:#eff9f3;color:#09633b}
+.industrial-ref-status.behind{border-color:#e8b7bd;background:#fff3f4;color:#93273c}
+.industrial-ref-status.unknown{background:#fff9eb;border-color:#ebd29f;color:#8c640f}
+.industrial-ref-status.empty{color:var(--muted)}
+.industrial-source a{display:inline-block;font-size:12px;margin-top:10px}
+.industrial-ref-table{border:1px solid var(--line);border-radius:12px;overflow:auto;margin-top:16px}.industrial-ref-table table{width:100%;table-layout:auto;min-width:680px}.industrial-ref-table td{font-size:11px}.industrial-ref-table td:nth-child(2){white-space:nowrap;font-variant-numeric:tabular-nums}
+.industrial-ref-table td:first-child{font-weight:750}
+@media(max-width:850px){.industrial-ref-form{grid-template-columns:1fr 1fr}.industrial-ref-main{grid-template-columns:1fr}}
+@media(max-width:560px){.industrial-ref-form{grid-template-columns:1fr}.industrial-explorer{padding:14px}.industrial-ref-table{max-width:100%}}
