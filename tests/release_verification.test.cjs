@@ -8,11 +8,14 @@ const scripts=[...html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)].filt
 assert.equal(scripts.length,1,'one inline application script');
 const js=scripts[0][2];
 new vm.Script(js,{filename:'index.html:inline-app'});
-assert.match(js,/const APP_VERSION='19'/);
+assert.match(js,/const APP_VERSION='20'/);
 assert.equal((js.match(/daysAgo\(7\)/g)||[]).length,2,'weekly startup and recommended setup');
 assert.doesNotMatch(js,/['"]gemini-3\.7-flash['"]/);
 assert.doesNotMatch(js,/['"]gemini-3\.5-flash['"]/);
 assert.match(html,/value="gemini-4-argon"/);
+assert.ok(js.includes("body={model:m,store:false,input:prompt"),'Interaction requests opt out of optional provider storage');
+assert.ok(js.includes("body={model:m,store:false,input:[{type:'document'"),'PDF requests opt out of optional provider storage');
+assert.ok(js.includes("JSON.stringify({store:false,contents:"),'GenerateContent fallback opts out of optional provider storage');
 const extract=name=>{
   let i=js.indexOf('function '+name+'(');
   assert.ok(i>=0,'missing function '+name);
@@ -67,6 +70,6 @@ const f=context.testHooks;
   ok(await f.verifyGeminiPaper(c,'2026-10-11','2026-10-18')===null,'network failure closed');
   const sw=fs.readFileSync(path.join(__dirname,'..','sw.js'),'utf8');
   new vm.Script(sw,{filename:'sw.js'});
-  ok(sw.includes('eureka-atlas-v19-20261025-shell'),'service worker cache bumped');
+  ok(sw.includes('eureka-atlas-v20-20261101-shell'),'service worker cache bumped');
   console.log('PASS: '+checks+' verification assertions, app syntax, service worker syntax and model defaults.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

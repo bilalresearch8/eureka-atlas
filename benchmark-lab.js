@@ -154,7 +154,7 @@ async function runBenchmarkLab(){
   let target={study_text:study},result=null;
   try{
     if(!hasAI){
-      result=await atlasMetadataBenchmark(study||benchmarkPdf?.name||'',schema,count,target,'Gemini API key not supplied');
+      result=await atlasMetadataBenchmark(study||benchmarkPdf?.name||'',schema,count,target,'Gemini API key not supplied',horizon);
     }else{
       if(benchmarkPdf){
         const r=await callGeminiDocument(benchmarkTargetPrompt(study||benchmarkPdf.name,schema),benchmarkPdf,{model:document.getElementById('geminiModel').value,timeout:160000});
@@ -179,7 +179,7 @@ async function runBenchmarkLab(){
   }catch(e){
     const reason=e?.geminiQuota?'Gemini quota reached (HTTP 429)':String(e?.message||'AI analysis unavailable').slice(0,180);
     try{
-      result=await atlasMetadataBenchmark(study||benchmarkPdf?.name||'',schema,count,target,reason);
+      result=await atlasMetadataBenchmark(study||benchmarkPdf?.name||'',schema,count,target,reason,horizon);
       if(e?.retryAfterSeconds)result.warnings.push('Google suggested retrying after approximately '+e.retryAfterSeconds+' seconds; project limits can last longer.');
     }catch(fallbackError){
       if(lastBenchmarkResult){

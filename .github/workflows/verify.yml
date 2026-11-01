@@ -15,9 +15,13 @@ jobs:
         run: |
           node --check benchmark-fallback.js
           node --check benchmark-lab.js
+          node --check benchmark-targets.js
           node --check sw.js
-      - name: Run regression suite
-        run: |
-          node tests/release_verification.test.cjs
-          node tests/benchmark_lab.test.cjs
-          node tests/benchmark_fallback.test.cjs
+      - name: Check release and strict publication dates
+        run: node tests/release_verification.test.cjs
+      - name: Check Benchmark Lab structure
+        run: node tests/benchmark_lab.test.cjs
+      - name: Check Crossref fallback and quota guards
+        run: node tests/benchmark_fallback.test.cjs
+      - name: Check DOE targets and publication horizons
+        run: node tests/industrial_reference.test.cjs

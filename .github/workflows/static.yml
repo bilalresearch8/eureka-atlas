@@ -35,6 +35,8 @@ jobs:
         run: |
           node --check benchmark-fallback.js
           node --check benchmark-lab.js
+          node --check benchmark-targets.js
+          node tests/industrial_reference.test.cjs
           node tests/release_verification.test.cjs
           node tests/benchmark_lab.test.cjs
           node tests/benchmark_fallback.test.cjs
