@@ -1,0 +1,39 @@
+/* Eureka Atlas v21 — first-principles scale-up studio */
+.scale-studio{padding:25px;margin-top:12px;overflow:hidden}
+.scale-top{display:flex;gap:24px;align-items:flex-start;justify-content:space-between}
+.scale-eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:800;color:var(--blue)}
+.scale-top h2{font-family:Manrope,Inter,sans-serif;font-size:clamp(24px,3vw,34px);line-height:1.16;letter-spacing:-.035em;margin:5px 0 7px}
+.scale-top p{color:var(--muted);font-size:13px;line-height:1.5;max-width:780px;margin:0}
+.scale-trust{background:#f1f5fb;border:1px solid #d7e2f2;color:#415167;padding:8px 10px;border-radius:9px;font-size:11px;font-weight:750;white-space:nowrap}
+.scale-body{display:grid;grid-template-columns:minmax(270px,.9fr) minmax(0,1.1fr);gap:17px;margin-top:20px}
+.scale-controls{background:#f7f9fc;border:1px solid var(--line);border-radius:14px;padding:16px}
+.scale-controls label{color:var(--ink)}.scale-pathway{display:block;margin-bottom:16px;font-size:12px;font-weight:750}
+.scale-pathway select{margin-top:6px;width:100%;min-height:44px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);padding:9px}
+.scale-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 11px}
+.scale-field{min-width:0;display:block}.scale-field>span{display:block;color:#49576c;font-size:11.5px;font-weight:700;min-height:33px;line-height:1.35}
+.scale-field>div{display:flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--line);border-radius:9px;padding:0 8px;min-width:0}
+.scale-field input{width:100%;min-width:0;min-height:42px;background:transparent;color:var(--ink);border:0;outline:none;font-size:15px}
+.scale-field>div:focus-within{box-shadow:0 0 0 2px #b6c4ff;border-color:var(--blue)}
+.scale-field small{flex-shrink:0;color:var(--muted);font-size:9.5px;max-width:78px;line-height:1.1;text-align:right}
+.scale-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}
+.scale-buttons button{border-radius:9px;border:1px solid #cad3df;padding:10px 14px;font-size:12px;font-weight:800;cursor:pointer;background:#fff;color:var(--ink)}
+.scale-buttons #scaleCalculate{background:var(--blue);color:white;border-color:var(--blue)}
+.scale-buttons button:disabled{opacity:.5;cursor:not-allowed}
+.scale-error{font-size:12px;color:#b4233d;min-height:18px;margin:8px 0 0}
+.scale-output{border:1px solid var(--line);border-radius:14px;background:#fff;padding:16px;min-width:0}
+.scale-output h3{margin:0 0 13px;font-family:Manrope;font-size:16px}
+.scale-placeholder{color:var(--muted);font-size:12px;line-height:1.6}
+.scale-metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scale-stat{border:1px solid #e3e9f1;background:#fafbfe;border-radius:10px;padding:12px;min-width:0}
+.scale-stat span{display:block;font-size:10.5px;color:var(--muted);margin-bottom:4px}
+.scale-stat strong{display:block;font-family:Manrope;font-size:17px;overflow-wrap:anywhere}
+.scale-chart{padding:14px 0 8px}.scale-chart h4{font-size:12px;font-weight:800;margin:0 0 14px}
+.scale-bar-row{margin:0 0 13px}.scale-bar-caption{display:flex;justify-content:space-between;gap:10px;font-size:11px;margin-bottom:5px}.scale-bar-caption b{font-weight:650}.scale-bar-caption span{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scale-track{height:11px;background:#e9eef6;border-radius:99px;overflow:hidden}.scale-track span{display:block;height:100%;background:#5279d2;border-radius:99px}
+.scale-bar-row:last-child .scale-track span{background:#17a398}
+.scale-caveat{font-size:11px;line-height:1.58;color:#5b6777;background:#f7f8fb;border-left:3px solid #91a8c6;padding:10px 12px;margin:6px 0 0}
+.scale-formula{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:11px;line-height:1.5;margin-top:14px}
+.scale-formula a{font-size:11px}
+@media(max-width:930px){.scale-body{grid-template-columns:1fr}.scale-top{flex-direction:column;gap:9px}.scale-trust{white-space:normal}}
+@media(max-width:560px){.scale-studio{padding:14px}.scale-fields{grid-template-columns:1fr}.scale-metrics{grid-template-columns:1fr 1fr}.scale-stat strong{font-size:15px}}
+@media(max-width:340px){.scale-metrics{grid-template-columns:1fr}.scale-bar-caption{display:block}}
