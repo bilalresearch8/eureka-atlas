@@ -12,7 +12,7 @@ const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
 new vm.Script(source,{filename:'evidence-explorer.js'});
 new vm.Script(sw,{filename:'sw.js'});
 const ctx={};
-vm.runInNewContext(source+"\nglobalThis.testHooks={atlasEvidenceParseNumber,atlasEvidenceCleanUnit,atlasEvidenceCanonicalValue,atlasEvidenceDoi,atlasEvidenceProtocol,atlasEvidenceComparable,atlasEvidenceValidate,atlasEvidenceTopicFamily,atlasEvidenceExtractRecord,atlasEvidenceMetricAllowed,ATLAS_EVIDENCE_METRICS};",ctx);
+vm.runInNewContext(source+"\nglobalThis.testHooks={atlasEvidenceParseNumber,atlasEvidenceCleanUnit,atlasEvidenceCanonicalValue,atlasEvidenceDoi,atlasEvidenceSameTitle,atlasEvidenceProtocol,atlasEvidenceComparable,atlasEvidenceValidate,atlasEvidenceTopicFamily,atlasEvidenceExtractRecord,atlasEvidenceMetricAllowed,ATLAS_EVIDENCE_METRICS};",ctx);
 const f=ctx.testHooks;
 const numeric=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,a+' != '+b);
 
@@ -41,6 +41,12 @@ assert.equal(f.atlasEvidenceMetricAllowed('partial_density','carbon'),true);
 assert.equal(f.atlasEvidenceDoi('https://doi.org/10.1038/s41563-026-02783-4'),'10.1038/s41563-026-02783-4');
 assert.equal(f.atlasEvidenceDoi('javascript:alert(1)'),'');
 assert.equal(f.atlasEvidenceDoi('arxiv:2602.08183'),'');
+assert.equal(f.atlasEvidenceSameTitle('Durable cobalt based alkaline water electrolysis at high current density',
+ 'Durable cobalt-based alkaline water electrolysis at high current density'),true);
+assert.equal(f.atlasEvidenceSameTitle('Durable cobalt based alkaline water electrolysis at high current density',
+ 'A totally unrelated organic electrosynthesis study'),false);
+assert.equal(f.atlasEvidenceSameTitle('Random short','Completely different'),false);
+
 const anchor={
  id:'a',metric:'density',family:'hydrogen',doi:'10.1038/s41563-026-02783-4',value:1.0,
  title:'Published measurement',configuration:'stack',basis:'geometric',
