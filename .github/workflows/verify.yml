@@ -28,3 +28,5 @@ jobs:
         run: node tests/industrial_reference.test.cjs
       - name: Check first-principles scale-up balances and units
         run: node tests/scaleup_studio.test.cjs
+          node tests/scaleup_studio.test.cjs
+          node tests/evidence_explorer.test.cjs
