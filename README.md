@@ -9,7 +9,7 @@
 
 No installation is required. Open the link in a modern browser, apply the recommended setup, choose your topics, journals, patents, and date range, then run the search.
 
-**Current public release:** v21
+**Current public release:** v22
 
 Eureka Atlas searches exact elite journals and patent sources, verifies publication dates, ranks unseen records, extracts quantitative evidence, identifies scale-up risks, and stores every delivered result in a local no-repeat research database.
 
@@ -26,6 +26,7 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 - **No AI key required for the literature snapshot:** fetch DOI-verified Crossref bibliographic neighbors with clear evidence labels. If Gemini reaches HTTP 429 quota, the app gracefully falls back to metadata and preserves previously extracted target metrics where available.
 - Crossref identity verification does not validate numerical measurements. Unsupported numerical state-of-the-art claims are suppressed and readiness scores stay unscored in metadata-only mode.
 - **Industrial reference explorer:** a no-key, interactive numerical chart against cited 2026 U.S. DOE low-temperature PEM, liquid alkaline, or high-temperature electrolysis targets. It requires explicit user confirmation of matching engineering conditions and a figure/table citation before reporting even a provisional threshold comparison. It is not a certification.
+- **Evidence Plots (v22):** no-key, source-linked visualization of electrochemical measurements. Add DOI/figure/table citations, retain normalization basis and operating conditions, switch between scientific metrics, choose a comparison anchor, inspect provenance, and import compatible quantitative evidence from saved deep analyses. Unit conversions are deterministic; bars never imply verified like-for-like tests or validated industrial state-of-the-art claims.
 - **Electrochemical Scale-up Studio (v21):** no-key, first-principles engineering calculator for H₂ electrolysis, CO₂-to-CO electrolysis, and lithium membrane recovery. Reports material throughput, Faradaic efficiency losses, stack electricity (where applicable), required area, and a visual throughput comparison. Source-linked constants and exportable JSON make calculations auditable. User-entered operating measurements are not independently verified. It does not estimate missing industrial costs, fouling, purity, or system losses.
 - Metadata-only peer searches now apply the selected 12/36/60/120-month publication horizon with strict online-first dates.
 - Gemini API requests explicitly use `store=false` to opt out of optional provider logging under its October 26, 2026 policy. Data still goes to Google for processing and is subject to provider terms.
@@ -34,6 +35,10 @@ Eureka Atlas searches exact elite journals and patent sources, verifies publicat
 - Exports readable multi-page PDF reports and CSV datasets.
 - Accepts a paper PDF for full-paper Gemini analysis of text, figures, tables, methods, and evidence.
 - Runs as a static browser application; no server is required for the core interface.
+
+## Evidence Plots quick start (v22)
+
+Open the **Evidence Plots** tab, select an electrochemical system and a quantitative metric. Enter a DOI-linked measurement with a title, figure/table/page location, cell configuration, normalization basis and experimental conditions. Compare measurements on the same numerical axis; the source details show whether the DOI identity has been checked through Crossref. Only records with the same declared system, metric, configuration, normalization basis and textual protocol are marked as candidate comparable. This is **not** an independent scientific review, a claim of the state of the art, or industrial certification. Select **Import from saved deep analyses** to retrieve unit-parseable evidence from local research records; these AI-extracted numbers remain marked unverified. Export JSON before clearing browser data.
 
 ## Quick start
 
@@ -76,6 +81,8 @@ Read [SECURITY.md](SECURITY.md) and [PRIVACY.md](PRIVACY.md) before public deplo
 ├── index.html                     Main application
 ├── scaleup-studio.js               Auditable first-principles electrochemical calculator
 ├── scaleup-studio.css              Responsive calculator visualization
+├── evidence-explorer.js             Source-linked measurement plots and unit normalization
+├── evidence-explorer.css            Responsive provenance-aware comparison UI
 ├── benchmark-lab.js               Electrochemical SOTA / industrial comparison engine
 ├── benchmark-fallback.js          Crossref metadata fallback and evidence safety checks
 ├── benchmark-targets.js           DOE guidepost data and source-aware evidence comparison
