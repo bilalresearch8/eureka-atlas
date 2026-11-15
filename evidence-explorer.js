@@ -54,8 +54,10 @@ function atlasEvidenceParseNumber(value){
 }
 function atlasEvidenceCleanUnit(unit){
   return String(unit||'').replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/g,c=>({'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-'}[c]))
-    .replace(/[·⋅]/g,'').replace(/\s+/g,'').replace(/cm\^-?2/gi,'cm2').replace(/cm-2/gi,'cm2')
-    .replace(/H₂/g,'H2').replace(/−/g,'-').trim();
+    .replace(/H₂/g,'H2').replace(/−/g,'-')
+    .replace(/\b(mAh|Ah|mA|A|mg|g)\s*(?:·|⋅|\s)\s*cm\s*(?:-2|\^-2)\b/gi,'$1/cm2')
+    .replace(/[·⋅]/g,'').replace(/\s+/g,'')
+    .replace(/cm\^-?2/gi,'cm2').replace(/cm-2/gi,'cm2').trim();
 }
 function atlasEvidenceCanonicalValue(metricId,value,sourceUnit){
   const spec=ATLAS_EVIDENCE_METRICS.find(x=>x.id===metricId);
