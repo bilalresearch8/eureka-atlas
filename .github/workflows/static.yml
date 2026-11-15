@@ -40,6 +40,8 @@ jobs:
           node tests/release_verification.test.cjs
           node tests/benchmark_lab.test.cjs
           node tests/benchmark_fallback.test.cjs
+          node tests/scaleup_studio.test.cjs
+          node tests/evidence_explorer.test.cjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
