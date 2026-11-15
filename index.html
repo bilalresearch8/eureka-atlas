@@ -35,6 +35,8 @@
 <script defer src="benchmark-targets.js"></script>
 <link rel="stylesheet" href="scaleup-studio.css">
 <script defer src="scaleup-studio.js"></script>
+<link rel="stylesheet" href="evidence-explorer.css">
+<script defer src="evidence-explorer.js"></script>
 <style>
 :root{
   --bg:#f4f6f9;--surface:#fff;--surface2:#eef2f7;--surface3:#e5eaf1;
@@ -104,11 +106,11 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
 <div class="toast-area" id="toastArea" aria-live="polite" aria-atomic="true"></div>
 <header class="topbar"><div class="topbar-inner">
   <a class="brand" href="#top"><span class="brand-mark">EA</span><span><strong>Eureka Atlas</strong><small>deep research + patent intelligence</small></span></a>
-  <nav class="nav-actions" aria-label="Primary navigation"><a class="nav-link" href="#how-it-works">How it works</a><a class="nav-link" href="#workspace">Find research</a><a class="nav-link" href="#benchmark-lab">Benchmark Lab</a><a class="nav-link" href="#scale-up">Scale-up</a><a class="nav-link" href="#database">Database</a><a class="nav-link" href="#patents">Patents</a><button class="nav-btn" id="openAssistant">Ask Atlas</button><a class="nav-btn primary" href="mailto:bilalresearch8@gmail.com?subject=Eureka%20Atlas%20collaboration">Collaborate</a><span class="status" role="status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Ready</span></span></nav>
+  <nav class="nav-actions" aria-label="Primary navigation"><a class="nav-link" href="#how-it-works">How it works</a><a class="nav-link" href="#workspace">Find research</a><a class="nav-link" href="#benchmark-lab">Benchmark Lab</a><a class="nav-link" href="#scale-up">Scale-up</a><a class="nav-link" href="#evidence-explorer">Evidence Plots</a><a class="nav-link" href="#database">Database</a><a class="nav-link" href="#patents">Patents</a><button class="nav-btn" id="openAssistant">Ask Atlas</button><a class="nav-btn primary" href="mailto:bilalresearch8@gmail.com?subject=Eureka%20Atlas%20collaboration">Collaborate</a><span class="status" role="status" aria-live="polite"><span class="dot" id="statusDot"></span><span id="statusText">Ready</span></span></nav>
 </div></header>
 <main id="top">
 <section class="hero">
-  <div><div class="eyebrow">Research intelligence for scientists, engineers, builders, and decision-makers</div><h1>Find the work that changes<br><span>what you build next.</span></h1><p>Search the newest papers and patents from exact sources, extract the numbers that matter, benchmark your own study against verified state of the art, expose industrialization gaps, and preserve every result in a no-repeat research database.</p><div class="hero-points"><span>Exact journal and date verification</span><span>Up to 12 source-grounded quantitative results</span><span>Study-vs-SOTA Benchmark Lab</span><span>Industrial gap analysis and next experiments</span><span>Persistent research memory</span></div><div class="hero-actions"><a class="hero-cta" href="#workspace">Build a research brief →</a><a class="hero-secondary" href="#scale-up">Calculate industrial throughput</a><button class="hero-secondary" id="recommendedSetup" type="button">Apply recommended setup</button></div></div>
+  <div><div class="eyebrow">Research intelligence for scientists, engineers, builders, and decision-makers</div><h1>Find the work that changes<br><span>what you build next.</span></h1><p>Search the newest papers and patents from exact sources, extract the numbers that matter, benchmark your own study against verified state of the art, expose industrialization gaps, and preserve every result in a no-repeat research database.</p><div class="hero-points"><span>Exact journal and date verification</span><span>Up to 12 source-grounded quantitative results</span><span>Study-vs-SOTA Benchmark Lab</span><span>Industrial gap analysis and next experiments</span><span>Persistent research memory</span></div><div class="hero-actions"><a class="hero-cta" href="#workspace">Build a research brief →</a><a class="hero-secondary" href="#scale-up">Calculate industrial throughput</a><a class="hero-secondary" href="#evidence-explorer">Plot experimental evidence</a><button class="hero-secondary" id="recommendedSetup" type="button">Apply recommended setup</button></div></div>
   <div class="hero-card"><small>From discovery to decision</small><h2>One workspace for evidence, relevance, readiness, and action.</h2><div class="radar-grid"><div class="radar-kpi"><b>50</b><span>customizable results</span></div><div class="radar-kpi"><b>0</b><span>repeated records</span></div><div class="radar-kpi"><b>3×</b><span>decision metrics per record</span></div></div><div class="hero-note">Built for people who need to know not only what was published, but whether it is credible, scalable, commercially relevant, and worth acting on.</div></div>
 </section>
 <section class="trust-strip" aria-label="Eureka Atlas capabilities"><div class="trust-inner">
@@ -263,6 +265,69 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
   </div>
 </section>
 
+
+<section class="container section" id="evidence-explorer" aria-labelledby="evidenceExplorerTitle">
+  <div class="panel evidence-explorer" id="evidenceExplorer">
+    <div class="evidence-hero">
+      <div><div class="evidence-kicker">Scientific visualizations · evidence provenance · no AI key</div>
+        <h2 id="evidenceExplorerTitle">Evidence Plots: Compare the measurements, not the headlines</h2>
+        <p>Build a source-linked plot from paper measurements. Each point retains its DOI, exact evidence location, experimental configuration, normalization basis, and stated test conditions. Similar-looking bars are not automatically equivalent experiments.</p>
+      </div><span class="evidence-tag" id="evidenceTotal">Locally saved measurements</span>
+    </div>
+    <div class="evidence-area">
+      <div class="evidence-toolbar">
+        <label for="evidenceFamily">Electrochemical technology
+          <select id="evidenceFamily"><option value="hydrogen">Water electrolysis / H₂</option><option value="carbon">CO₂ electroreduction</option><option value="battery">Batteries / storage</option><option value="fuel">Fuel cells</option><option value="recovery">Metal / mineral extraction</option><option value="surface">Electrodeposition / anodizing</option><option value="other">Other electrochemistry</option></select>
+        </label>
+        <label for="evidenceMetric">Quantitative performance metric
+          <select id="evidenceMetric"></select>
+        </label>
+        <label for="evidenceAnchor">Reference study for declared-protocol comparison
+          <select id="evidenceAnchor" disabled></select>
+        </label>
+      </div>
+      <div class="evidence-plot-grid">
+        <section class="evidence-chart-panel" aria-label="Evidence-based numerical comparison">
+          <h3>Source-linked measurements</h3>
+          <p class="evidence-plot-summary" id="evidenceSummary">No observations yet.</p>
+          <div class="evidence-plot" id="evidencePlot" aria-live="polite"><p class="evidence-placeholder">Add a source-linked experimental measurement to begin.</p></div>
+        </section>
+        <section class="evidence-detail-panel" id="evidenceDetail" aria-label="Selected experimental evidence">
+          <h3>Inspect the evidence</h3>
+          <p>Select a plotted observation to inspect its experimental conditions, source, and evidence quality.</p>
+        </section>
+      </div>
+      <div class="evidence-compose">
+        <h3>Add a source-linked experimental result</h3>
+        <p>Enter an actual reported value—not a predicted or invented industrial target. State the measurement conditions as precisely as possible. Same-text protocol matching is a conservative screen, not independent reproducibility validation.</p>
+        <div class="evidence-compose-grid">
+          <label class="full" for="evidenceTitle">Publication title <input id="evidenceTitle" maxlength="230" placeholder="Exact paper title"></label>
+          <label for="evidenceDOI">Paper DOI <input id="evidenceDOI" maxlength="170" placeholder="10.1038/..."></label>
+          <label for="evidenceValue"><span id="evidenceUnit">Measured value (A/cm²)</span><input type="number" min="0" step="any" id="evidenceValue" placeholder="Measured numerical value"></label>
+          <label for="evidenceLocation">Figure, table, or page <input id="evidenceLocation" maxlength="160" placeholder="Fig. 3b / Table 2 / p. 6"></label>
+          <label for="evidenceConfiguration">Experimental cell configuration
+            <select id="evidenceConfiguration"><option value="unknown">Not specified</option><option value="stack">Full stack / system</option><option value="device">Full cell / complete device</option><option value="half">Half-cell</option><option value="three">Three-electrode</option><option value="electrode">Electrode / catalyst only</option><option value="reactor">Flow reactor / module</option></select>
+          </label>
+          <label for="evidenceBasis">Measurement normalization basis
+            <select id="evidenceBasis"><option value="other">Other / unknown</option><option value="geometric">Geometric area</option><option value="ecsa">ECSA-normalized area</option><option value="mass">Active mass</option><option value="device">Packaged device / total mass</option><option value="feed">Feed / product mass</option></select>
+          </label>
+          <label class="full" for="evidenceConditions">Explicit operating and measurement conditions
+            <textarea id="evidenceConditions" maxlength="300" rows="2" placeholder="Example: 80 °C; 6 M NaOH; 1 A/cm²; catalyst loading 1 mg/cm²; 10 cm² active area; continuous operation"></textarea>
+          </label>
+        </div>
+        <div class="evidence-actions">
+          <button type="button" class="primary" id="evidenceAdd">Add measured evidence</button>
+          <button type="button" class="ghost" id="evidenceImport">Import from saved deep analyses</button>
+          <button type="button" class="ghost" id="evidenceExport">Export traceable JSON</button>
+          <button type="button" class="ghost" id="evidenceClear">Clear observations</button>
+        </div>
+        <p class="evidence-note" id="evidenceNotice" role="status" aria-live="polite">Citation identity can be checked against Crossref. Crossref verifies bibliographic identity only—not experimental numbers or performance claims.</p>
+        <p class="evidence-privacy">Your entered measurements stay in this browser's local storage unless you export them. AI-extracted measurements, when imported, remain explicitly marked as unverified. No new industrial targets or numerical state-of-the-art claims are inferred by this chart.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="container section" id="database"><div class="section-title"><div><div class="eyebrow">Persistent local memory</div><h2>Your research intelligence database</h2><p>Every delivered paper and patent is saved in this browser and skipped in future searches by default.</p></div><span class="count" id="dbCount">0 saved</span></div>
   <div class="panel database-panel"><div class="db-stats"><div class="db-stat"><b id="dbTotal">0</b><span>records saved</span></div><div class="db-stat"><b id="dbTopics">0</b><span>research themes</span></div><div class="db-stat"><b id="dbLatest">—</b><span>latest search</span></div></div>
   <div class="toolbar" style="margin-top:15px"><div class="searchbox">⌕ <input id="dbSearch" placeholder="Search the complete database"></div><button class="ghost small" id="dbCsv">Export database CSV</button><button class="primary small" id="dbPdf">Database readable PDF</button><button class="danger small" id="dbClear">Delete database</button></div>
@@ -285,7 +350,7 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
 </main>
 
 <footer class="footer"><div class="footer-card">
-  <div class="footer-copy"><strong>Build research tools that save scientists, engineers, and builders time.</strong><p>For collaboration, scientific feedback, commercialization partnerships, or deployment support, contact Bilal.</p><p>Eureka Atlas v21 · verified research discovery, benchmark comparison and first-principles scale-up.</p></div>
+  <div class="footer-copy"><strong>Build research tools that save scientists, engineers, and builders time.</strong><p>For collaboration, scientific feedback, commercialization partnerships, or deployment support, contact Bilal.</p><p>Eureka Atlas v22 · verified research discovery, benchmark comparison and first-principles scale-up.</p></div>
   <a class="footer-email" href="mailto:bilalresearch8@gmail.com?subject=Eureka%20Atlas%20collaboration">bilalresearch8@gmail.com</a>
   <section class="support-card" aria-label="Support Eureka Atlas with Zelle">
     <div class="support-copy"><span class="support-eyebrow">Support us build more</span><b>Help fund faster, deeper research tools.</b><p>Send support with Zelle and confirm the recipient name before paying.</p>
@@ -320,7 +385,7 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
 'use strict';
 const CONTACT_EMAIL='bilalresearch8@gmail.com';
 const DEFAULT_SUPPORT_QR='data:image/png;base64,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';
-const APP_VERSION='21';
+const APP_VERSION='22';
 let geminiQuotaBlockedUntil=0;
 function geminiQuotaError(res){
   const header=res?.headers?.get?.('retry-after')||'';
