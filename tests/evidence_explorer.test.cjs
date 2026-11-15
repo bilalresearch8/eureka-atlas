@@ -12,7 +12,7 @@ const sw=fs.readFileSync(path.join(root,'sw.js'),'utf8');
 new vm.Script(source,{filename:'evidence-explorer.js'});
 new vm.Script(sw,{filename:'sw.js'});
 const ctx={};
-vm.runInNewContext(source+"\nglobalThis.testHooks={atlasEvidenceParseNumber,atlasEvidenceCleanUnit,atlasEvidenceCanonicalValue,atlasEvidenceDoi,atlasEvidenceProtocol,atlasEvidenceComparable,atlasEvidenceValidate,atlasEvidenceTopicFamily,atlasEvidenceExtractRecord,ATLAS_EVIDENCE_METRICS};",ctx);
+vm.runInNewContext(source+"\nglobalThis.testHooks={atlasEvidenceParseNumber,atlasEvidenceCleanUnit,atlasEvidenceCanonicalValue,atlasEvidenceDoi,atlasEvidenceProtocol,atlasEvidenceComparable,atlasEvidenceValidate,atlasEvidenceTopicFamily,atlasEvidenceExtractRecord,atlasEvidenceMetricAllowed,ATLAS_EVIDENCE_METRICS};",ctx);
 const f=ctx.testHooks;
 const numeric=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,a+' != '+b);
 
@@ -33,6 +33,10 @@ assert.equal(f.atlasEvidenceCanonicalValue('duration','~3','h'),null,'approximat
 assert.equal(f.atlasEvidenceCanonicalValue('duration','NaN','h'),null);
 assert.equal(f.atlasEvidenceCanonicalValue('duration','1e999','h'),null);
 assert.ok(f.ATLAS_EVIDENCE_METRICS.some(m=>m.id==='ce'),'CE separate from FE');
+assert.equal(f.atlasEvidenceMetricAllowed('specific_energy','hydrogen'),false,'battery-specific energy not an H2 metric');
+assert.equal(f.atlasEvidenceMetricAllowed('h2_energy','battery'),false,'H2 stack electricity not a battery metric');
+assert.equal(f.atlasEvidenceMetricAllowed('ce','battery'),true);
+assert.equal(f.atlasEvidenceMetricAllowed('partial_density','carbon'),true);
 
 assert.equal(f.atlasEvidenceDoi('https://doi.org/10.1038/s41563-026-02783-4'),'10.1038/s41563-026-02783-4');
 assert.equal(f.atlasEvidenceDoi('javascript:alert(1)'),'');
@@ -54,6 +58,7 @@ assert.equal(f.atlasEvidenceComparable({...anchor,configuration:'unknown'},{...n
 assert.equal(f.atlasEvidenceComparable({...anchor,basis:'other'},{...near,basis:'other'}),false,'unknown normalization not comparable');
 assert.equal(f.atlasEvidenceValidate(anchor).doi,anchor.doi);
 assert.equal(f.atlasEvidenceValidate({...anchor,doi:'invalid'}),null);
+assert.equal(f.atlasEvidenceValidate({...anchor,metric:'specific_energy'}),null,'incompatible domain/metric rejected');
 
 assert.equal(f.atlasEvidenceTopicFamily('Batteries'),'battery');
 assert.equal(f.atlasEvidenceTopicFamily('Fuel Cells'),'fuel');
