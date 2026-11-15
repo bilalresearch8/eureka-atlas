@@ -89,6 +89,16 @@ function atlasEvidenceDoi(v){
   const s=atlasEvidenceClean(v,170).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i,'').replace(/^doi\s*:\s*/i,'').replace(/[.,;]+$/,'').toLowerCase();
   return /^10\.\d{4,9}\/[a-z0-9._;()/:+-]+$/i.test(s)?s:'';
 }
+function atlasEvidenceSameTitle(a,b){
+  const clean=t=>String(t||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const x=clean(a),y=clean(b);if(!x||!y)return false;
+  if(x===y)return true;
+  const terms=t=>new Set(t.split(' ').filter(w=>w.length>=4));
+  const left=terms(x),right=terms(y);
+  if(left.size<3||right.size<3)return false;
+  let common=0;for(const w of left)if(right.has(w))common++;
+  return common>=3&&common/Math.max(left.size,right.size)>=0.8;
+}
 function atlasEvidenceProtocol(v){return String(v||'').toLowerCase().replace(/\s+/g,' ').trim();}
 function atlasEvidenceComparable(a,b){
   if(!a||!b||a.metric!==b.metric||a.family!==b.family)return false;
@@ -150,7 +160,8 @@ async function atlasEvidenceVerifyDoi(item){
   try{
     const r=await fetchRetry('https://api.crossref.org/works/'+encodeURIComponent(item.doi),null,15000,1);
     const paper=r?.message||{};
-    if(atlasEvidenceDoi(paper.DOI)!==item.doi)return false;
+    if(atlasEvidenceDoi(paper.DOI)!==item.doi||paper.type&&paper.type!=='journal-article')return false;
+    if(!atlasEvidenceSameTitle(item.title,paper.title?.[0]))return false;
     const stored=atlasEvidenceRecords.find(x=>x.id===item.id);
     if(!stored)return false;
     stored.title=atlasEvidenceClean(paper.title?.[0]||stored.title,230);
