@@ -16,6 +16,22 @@ const ATLAS_EVIDENCE_METRICS=[
   {id:'recovery',label:'Metal recovery efficiency',unit:'%',aliases:['recovery efficiency','metal recovery','recovery yield'],units:{'%':1},max:100},
   {id:'loading',label:'Catalyst loading',unit:'mg/cm²',aliases:['catalyst loading','pgm loading'],units:{'mg/cm2':1,'g/cm2':1000},max:1e9}
 ];
+const ATLAS_EVIDENCE_METRIC_FAMILIES={
+ density:['hydrogen','carbon','fuel','surface','other'],
+ partial_density:['carbon','other'],
+ fe:['hydrogen','carbon','fuel','recovery','other'],
+ ce:['battery','other'],
+ duration:['hydrogen','carbon','battery','fuel','recovery','surface','other'],
+ voltage:['hydrogen','carbon','battery','fuel','surface','other'],
+ specific_energy:['battery','other'],
+ areal_capacity:['battery','other'],
+ h2_energy:['hydrogen'],
+ recovery:['recovery','other'],
+ loading:['hydrogen','carbon','fuel','surface','other']
+};
+function atlasEvidenceMetricAllowed(metricId,family){
+  return !!ATLAS_EVIDENCE_METRIC_FAMILIES[metricId]?.includes(family);
+}
 const ATLAS_EVIDENCE_FAMILIES={
  hydrogen:'Water electrolysis / H₂',
  carbon:'CO₂ electroreduction',
@@ -82,7 +98,7 @@ function atlasEvidenceComparable(a,b){
   return a.configuration===b.configuration&&a.basis===b.basis&&atlasEvidenceProtocol(a.conditions)===atlasEvidenceProtocol(b.conditions);
 }
 function atlasEvidenceValidate(v){
-  if(!v||!ATLAS_EVIDENCE_METRICS.some(m=>m.id===v.metric)||!Object.hasOwn(ATLAS_EVIDENCE_FAMILIES,v.family))return null;
+  if(!v||!ATLAS_EVIDENCE_METRICS.some(m=>m.id===v.metric)||!Object.hasOwn(ATLAS_EVIDENCE_FAMILIES,v.family)||!atlasEvidenceMetricAllowed(v.metric,v.family))return null;
   const spec=ATLAS_EVIDENCE_METRICS.find(m=>m.id===v.metric);
   const number=atlasEvidenceParseNumber(v.value);
   if(number===null||number>spec.max)return null;
@@ -316,9 +332,19 @@ function atlasEvidenceExport(){
 function initAtlasEvidenceExplorer(){
   const panel=document.getElementById('evidenceExplorer');if(!panel)return;
   const metric=panel.querySelector('#evidenceMetric');
-  for(const m of ATLAS_EVIDENCE_METRICS){const option=document.createElement('option');option.value=m.id;option.textContent=m.label+' ('+m.unit+')';metric.append(option);}
-  atlasEvidenceLoad();atlasEvidenceRender();
-  for(const id of ['evidenceFamily','evidenceMetric','evidenceAnchor'])panel.querySelector('#'+id).addEventListener('change',()=>{atlasEvidenceSelection='';atlasEvidenceRender();});
+  const family=panel.querySelector('#evidenceFamily');
+  function fillMetrics(){
+    const prev=metric.value;
+    metric.replaceChildren();
+    for(const m of ATLAS_EVIDENCE_METRICS.filter(x=>atlasEvidenceMetricAllowed(x.id,family.value))){
+      const option=document.createElement('option');option.value=m.id;option.textContent=m.label+' ('+m.unit+')';metric.append(option);
+    }
+    if([...metric.options].some(o=>o.value===prev))metric.value=prev;
+    atlasEvidenceSelection='';atlasEvidenceRender();
+  }
+  atlasEvidenceLoad();fillMetrics();
+  family.addEventListener('change',fillMetrics);
+  for(const id of ['evidenceMetric','evidenceAnchor'])panel.querySelector('#'+id).addEventListener('change',()=>{atlasEvidenceSelection='';atlasEvidenceRender();});
   panel.querySelector('#evidenceAdd').addEventListener('click',()=>{
     try{const row=atlasEvidenceAddFromForm();atlasEvidenceNotice('Observation saved locally. DOI identity is not checked yet; the numeric value is researcher-transcribed.');atlasEvidenceVerifyDoi(row);}
     catch(e){atlasEvidenceNotice(e.message);}
