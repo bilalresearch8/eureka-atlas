@@ -6,7 +6,8 @@ const ATLAS_EVIDENCE_MAX=120;
 const ATLAS_EVIDENCE_METRICS=[
   {id:'density',label:'Geometric current density',unit:'A/cm²',aliases:['current density','geometric current density'],units:{'A/cm2':1,'mA/cm2':0.001},max:1e6},
   {id:'partial_density',label:'Partial current density',unit:'mA/cm²',aliases:['partial current density'],units:{'mA/cm2':1,'A/cm2':1000},max:1e9},
-  {id:'fe',label:'Faradaic efficiency',unit:'%',aliases:['faradaic efficiency','coulombic efficiency'],units:{'%':1},max:100},
+  {id:'fe',label:'Faradaic efficiency',unit:'%',aliases:['faradaic efficiency'],units:{'%':1},max:100},
+  {id:'ce',label:'Coulombic efficiency',unit:'%',aliases:['coulombic efficiency'],units:{'%':1},max:100},
   {id:'duration',label:'Operating durability',unit:'h',aliases:['durability','stability','operating lifetime','continuous operation'],units:{h:1,hours:1,hour:1,day:24,days:24},max:1e8},
   {id:'voltage',label:'Cell voltage',unit:'V',aliases:['cell voltage','stack voltage'],units:{V:1,mV:0.001},max:1000},
   {id:'specific_energy',label:'Specific energy (battery cell)',unit:'Wh/kg',aliases:['specific energy','energy density'],units:{'Wh/kg':1,'kWh/kg':1000},max:1e6},
@@ -265,6 +266,7 @@ function atlasEvidenceExtractRecord(p,field,metric,family){
   if(atlasEvidenceTopicFamily(p.topic||'')!==family)return null;
   const term=String(field.metric||'').toLowerCase();
   if(!metric.aliases.some(w=>term.includes(w)))return null;
+  if(metric.id==='density'&&/partial current density/.test(term))return null;
   const doi=atlasEvidenceDoi(p.doi);
   if(!doi||!field.sourceUrl&&!field.evidenceLocation)return null;
   const value=atlasEvidenceCanonicalValue(metric.id,field.value,field.unit);
