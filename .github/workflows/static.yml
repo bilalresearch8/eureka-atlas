@@ -36,10 +36,14 @@ jobs:
           node --check benchmark-fallback.js
           node --check benchmark-lab.js
           node --check benchmark-targets.js
+          node --check scaleup-studio.js
+          node --check evidence-explorer.js
           node tests/industrial_reference.test.cjs
           node tests/release_verification.test.cjs
           node tests/benchmark_lab.test.cjs
           node tests/benchmark_fallback.test.cjs
+          node tests/scaleup_studio.test.cjs
+          node tests/evidence_explorer.test.cjs
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
