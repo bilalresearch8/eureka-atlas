@@ -88,11 +88,11 @@ assert.match(html,/id="evidenceExplorer"/);
 for(const id of ['evidencePlot','evidenceDetail','evidenceFamily','evidenceMetric','evidenceAdd',
  'evidenceImport','evidenceExport','evidenceDOI','evidenceLocation','evidenceConditions','evidenceAnchor'])
   assert.ok(html.includes('id="'+id+'"'),id);
-assert.match(html,/const APP_VERSION='22'/);
+assert.match(html,/const APP_VERSION='23'/);
 assert.match(html,/evidence-explorer\.js/);
 assert.match(html,/evidence-explorer\.css/);
 assert.match(css,/\.evidence-plot-row/);
-assert.match(sw,/eureka-atlas-v22-20261115-shell/);
+assert.match(sw,/eureka-atlas-v23-20261122-shell/);
 assert.match(sw,/evidence-explorer\.js/);
 assert.match(sw,/evidence-explorer\.css/);
 console.log('PASS: evidence normalization, uncertainty rejection, reaction and basis segregation, strict citation/protocol gates, source provenance, chart UI and service-worker shell.');

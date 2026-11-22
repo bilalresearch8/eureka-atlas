@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+<title>Eureka Atlas</title>
+<rect x="0" y="0" width="512" height="512" rx="112" fill="#07111f"/>
+<rect x="48" y="48" width="416" height="416" rx="88" fill="none" stroke="#8fe9f5" stroke-width="13"/>
+<path d="M119 333 205 177l53 104 51-75 85 127" fill="none" stroke="#8fe9f5" stroke-width="25" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="205" cy="177" r="20" fill="#ffffff"/>
+<circle cx="258" cy="281" r="18" fill="#ffffff"/>
+<circle cx="309" cy="206" r="18" fill="#ffffff"/>
+</svg>

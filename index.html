@@ -10,14 +10,12 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Eureka Atlas — Research & Patent Intelligence">
 <meta property="og:description" content="From the newest elite-journal papers and patents to a quantified decision brief—in minutes.">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <link rel="canonical" href="https://bilalresearch8.github.io/eureka-atlas/">
 <meta property="og:url" content="https://bilalresearch8.github.io/eureka-atlas/">
-<meta property="og:image" content="https://bilalresearch8.github.io/eureka-atlas/assets/eureka-atlas-preview.png">
 <meta name="twitter:title" content="Eureka Atlas — Research & Patent Intelligence">
 <meta name="twitter:description" content="Find the newest high-impact papers and patents, extract what matters, and decide what to build next.">
-<meta name="twitter:image" content="https://bilalresearch8.github.io/eureka-atlas/assets/eureka-atlas-preview.png">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"WebApplication","name":"Eureka Atlas","url":"https://bilalresearch8.github.io/eureka-atlas/","applicationCategory":"EducationalApplication","operatingSystem":"Web","description":"Research and patent intelligence for scientists, engineers, builders, founders, investors, and R&D leaders. Eureka Atlas discovers recent high-impact papers and patents, verifies sources and dates, extracts quantitative evidence, and supports commercialization decisions.","isAccessibleForFree":true,"author":{"@type":"Person","name":"Muhammad Bilal"}}
 </script>
@@ -37,6 +35,8 @@
 <script defer src="scaleup-studio.js"></script>
 <link rel="stylesheet" href="evidence-explorer.css">
 <script defer src="evidence-explorer.js"></script>
+<link rel="stylesheet" href="evidence-audit.css">
+<script defer src="evidence-audit.js"></script>
 <style>
 :root{
   --bg:#f4f6f9;--surface:#fff;--surface2:#eef2f7;--surface3:#e5eaf1;
@@ -299,6 +299,14 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
           <p>Select a plotted observation to inspect its experimental conditions, source, and evidence quality.</p>
         </section>
       </div>
+      <section class="evidence-audit-panel" aria-labelledby="evidenceAuditTitle">
+        <div class="evidence-audit-head"><h3 id="evidenceAuditTitle">Evidence and comparability audit</h3>
+          <button class="ghost small" type="button" id="evidenceAuditExport" disabled>Export comparison audit</button>
+        </div>
+        <p id="evidenceAuditSummary" role="status">Add measurements to check missing reporting context and protocol differences.</p>
+        <div id="evidenceAuditRows" class="evidence-audit-list"></div>
+        <p>Reporting prompts check only saved study summaries, not the paper itself. A matching protocol description is a candidate for expert review, never numerical or industrial validation.</p>
+      </section>
       <div class="evidence-compose">
         <h3>Add a source-linked experimental result</h3>
         <p>Enter an actual reported value—not a predicted or invented industrial target. State the measurement conditions as precisely as possible. Same-text protocol matching is a conservative screen, not independent reproducibility validation.</p>
@@ -352,7 +360,7 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
 </main>
 
 <footer class="footer"><div class="footer-card">
-  <div class="footer-copy"><strong>Build research tools that save scientists, engineers, and builders time.</strong><p>For collaboration, scientific feedback, commercialization partnerships, or deployment support, contact Bilal.</p><p>Eureka Atlas v22 · verified research discovery, benchmark comparison and first-principles scale-up.</p></div>
+  <div class="footer-copy"><strong>Build research tools that save scientists, engineers, and builders time.</strong><p>For collaboration, scientific feedback, commercialization partnerships, or deployment support, contact Bilal.</p><p>Eureka Atlas v23 · source-linked discovery, audited evidence comparisons and first-principles scale-up.</p></div>
   <a class="footer-email" href="mailto:bilalresearch8@gmail.com?subject=Eureka%20Atlas%20collaboration">bilalresearch8@gmail.com</a>
   <section class="support-card" aria-label="Support Eureka Atlas with Zelle">
     <div class="support-copy"><span class="support-eyebrow">Support us build more</span><b>Help fund faster, deeper research tools.</b><p>Send support with Zelle and confirm the recipient name before paying.</p>
@@ -387,7 +395,7 @@ button:disabled{cursor:not-allowed;opacity:.55}.hero-actions{display:flex;gap:10
 'use strict';
 const CONTACT_EMAIL='bilalresearch8@gmail.com';
 const DEFAULT_SUPPORT_QR='data:image/png;base64,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';
-const APP_VERSION='22';
+const APP_VERSION='23';
 let geminiQuotaBlockedUntil=0;
 function geminiQuotaError(res){
   const header=res?.headers?.get?.('retry-after')||'';
