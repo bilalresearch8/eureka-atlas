@@ -1,0 +1,18 @@
+/* v23: reporting gaps and protocol-comparison diagnostics */
+.evidence-audit-panel{margin-top:14px;background:#f9fbff;border:1px solid var(--line);border-radius:13px;padding:17px}
+.evidence-audit-head{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.evidence-audit-head h3{margin:0;font:800 18px Manrope,Inter,sans-serif}
+.evidence-audit-head button:disabled{opacity:.5;cursor:not-allowed}
+.evidence-audit-panel p{margin:7px 0 11px;color:var(--muted);font-size:12px;line-height:1.6}
+.evidence-audit-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.evidence-audit-row{border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);padding:12px;text-align:left;cursor:pointer;min-width:0}
+.evidence-audit-row:hover,.evidence-audit-row:focus-visible{border-color:var(--blue);outline-offset:2px}
+.evidence-audit-heading{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.evidence-audit-heading strong{font-size:12px;overflow-wrap:anywhere;min-width:0}
+.evidence-audit-state{font-size:10px;font-weight:750;white-space:nowrap;color:var(--muted)}
+.evidence-audit-note{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-top:6px;overflow-wrap:anywhere}
+.evidence-audit-detail{border-top:1px solid var(--line);margin-top:16px;padding-top:13px}
+.evidence-audit-detail h4{font-size:13px;margin:0}
+.evidence-audit-detail p,.evidence-audit-detail li{font-size:11px;line-height:1.6;overflow-wrap:anywhere}
+.evidence-audit-detail ul{padding-left:18px;margin:7px 0;max-height:265px;overflow:auto}
+@media(max-width:720px){.evidence-audit-list{grid-template-columns:1fr}.evidence-audit-heading{flex-wrap:wrap}.evidence-audit-state{white-space:normal}}

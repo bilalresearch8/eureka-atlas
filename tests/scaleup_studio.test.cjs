@@ -62,7 +62,7 @@ assert.equal(m.atlasScaleBarData(h).length,2);
 assert.equal(m.atlasScaleBarData(li).length,3);
 for(const id of ['scaleStudio','scalePathway','scaleFields','scaleError','scaleOutput','scaleCalculate','scaleExport']) assert.ok(html.includes('id="'+id+'"'),id);
 assert.match(html,/scaleup-studio\.js/);assert.match(html,/scaleup-studio\.css/);
-assert.match(sw,/eureka-atlas-v22-20261115-shell/);
+assert.match(sw,/eureka-atlas-v23-20261122-shell/);
 assert.match(sw,/scaleup-studio\.js/);assert.match(sw,/scaleup-studio\.css/);
 assert.match(css,/\.scale-metrics/);
 console.log('PASS: First-principles H2/CO/Li balances, units, FE/uptime, area scaling, physical edge cases, UI hooks, cache integration.');

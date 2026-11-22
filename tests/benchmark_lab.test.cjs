@@ -16,7 +16,7 @@ new vm.Script(scripts[0][2],{filename:'index.html:inline'});
 new vm.Script(benchmark,{filename:'benchmark-lab.js'});
 new vm.Script(sw,{filename:'sw.js'});
 
-assert.match(html,/const APP_VERSION='22'/);
+assert.match(html,/const APP_VERSION='23'/);
 assert.match(html,/id="benchmark-lab"/);
 assert.match(html,/id="benchmarkStudy"/);
 assert.match(html,/id="runBenchmark"/);
@@ -48,7 +48,7 @@ assert.match(sw,/benchmark-targets\.js/);
 assert.match(sw,/benchmark-targets\.css/);
 assert.match(css,/\.benchmark-table/);
 assert.match(css,/\.benchmark-gap-grid/);
-assert.match(sw,/eureka-atlas-v22-20261115-shell/);
+assert.match(sw,/eureka-atlas-v23-20261122-shell/);
 assert.match(sw,/benchmark-lab\.js/);
 assert.match(sw,/benchmark-lab\.css/);
 

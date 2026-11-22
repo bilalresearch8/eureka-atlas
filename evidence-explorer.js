@@ -1,5 +1,5 @@
 'use strict';
-// Eureka Atlas v22: explicit-measurement visualization. Neither DOI validation nor AI extraction
+// Eureka Atlas v23: explicit-measurement visualization. Neither DOI validation nor AI extraction
 // is proof that a plotted numerical value was measured as asserted.
 const ATLAS_EVIDENCE_STORE='eurekaAtlasEvidenceV22';
 const ATLAS_EVIDENCE_MAX=120;
@@ -262,6 +262,7 @@ function atlasEvidenceRender(){
     actions.append(verify,remove);detail.append(header,source,provenance,info,actions);
   }else detail.append(atlasEvidenceBuildNode('p','Select a plotted observation to inspect its citation, operating conditions, and evidence status.'));
   panel.querySelector('#evidenceTotal').textContent=atlasEvidenceRecords.length+' saved locally';
+  if(typeof atlasEvidenceAuditRender==='function')atlasEvidenceAuditRender(records,anchor);
 }
 function atlasEvidenceAddFromForm(){
   const panel=document.getElementById('evidenceExplorer');
@@ -354,6 +355,7 @@ function initAtlasEvidenceExplorer(){
     atlasEvidenceSelection='';atlasEvidenceRender();
   }
   atlasEvidenceLoad();fillMetrics();
+  if(typeof initAtlasEvidenceAudit==='function')initAtlasEvidenceAudit();
   family.addEventListener('change',fillMetrics);
   for(const id of ['evidenceMetric','evidenceAnchor'])panel.querySelector('#'+id).addEventListener('change',()=>{atlasEvidenceSelection='';atlasEvidenceRender();});
   panel.querySelector('#evidenceAdd').addEventListener('click',()=>{

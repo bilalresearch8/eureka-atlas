@@ -18,6 +18,7 @@ jobs:
           node --check benchmark-targets.js
           node --check scaleup-studio.js
           node --check evidence-explorer.js
+          node --check evidence-audit.js
           node --check sw.js
       - name: Check release and strict publication dates
         run: node tests/release_verification.test.cjs
@@ -31,3 +32,7 @@ jobs:
         run: node tests/scaleup_studio.test.cjs
       - name: Check source-linked evidence plots and scientific comparability
         run: node tests/evidence_explorer.test.cjs
+      - name: Check deterministic evidence audits
+        run: node tests/evidence_audit.test.cjs
+      - name: Check verified offline shell
+        run: node tests/service_worker.test.cjs
